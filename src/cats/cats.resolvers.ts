@@ -14,7 +14,7 @@ export class CatsResolvers {
 
   @Query()
   @UseGuards(CatsGuard)
-  async getCats() {
+  async getCats(): Promise<Cat[]> {
     return this.catsService.findAll();
   }
 
@@ -34,7 +34,7 @@ export class CatsResolvers {
   }
 
   @Subscription("catCreated")
-  catCreated() {
-    return pubSub.asyncIterator("catCreated");
+  catCreated(): AsyncIterator<string> {
+    return pubSub.asyncIterator<string>("catCreated");
   }
 }

@@ -4,6 +4,7 @@ import { GqlExecutionContext } from "@nestjs/graphql";
 @Injectable()
 export class CatsGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const ctx = GqlExecutionContext.create(context);
     return true;
   }
