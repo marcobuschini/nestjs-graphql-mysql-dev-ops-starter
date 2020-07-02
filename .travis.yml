@@ -26,7 +26,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - npm run test:cov --passWithNoTests
+  - npm run test:cov
 
 after_script:
   - mkdir coverage
