@@ -1,0 +1,35 @@
+dist: trusty
+sudo: false
+
+language: node_js
+node_js:
+  - "12"
+
+env:
+  global:
+    - CC_TEST_REPORTER_ID=ed1ea366255e5254c8eec511023e473279f3a5259884eb5f15968034209605d2
+    - NODE_ENV=test
+
+cache:
+  directories:
+    - ./node_modules
+
+before_install:
+  - mysql -e 'CREATE DATABASE cats;'
+
+install:
+  - npm install
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+  - npm run test:cov
+
+after_script:
+  - mkdir coverage
+  - mv test/coverage/lcov.info coverage/lcov.info
+  - ./cc-test-reporter after-build -t lcov --exit-code $TRAVIS_TEST_RESULT
+  - npx coveralls <./coverage/lcov.info
