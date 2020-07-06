@@ -1,40 +1,40 @@
-import { ParseIntPipe, UseGuards } from "@nestjs/common";
-import { Args, Mutation, Query, Resolver, Subscription } from "@nestjs/graphql";
-import { PubSub } from "graphql-subscriptions";
-import { Cat } from "../graphql.schema";
-import { CatsGuard } from "./cats.guard";
-import { CatsService } from "./cats.service";
-import { CreateCatDto } from "./dto/create-cat.dto";
+import { ParseIntPipe, UseGuards } from '@nestjs/common'
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql'
+import { PubSub } from 'graphql-subscriptions'
+import { Cat } from '../graphql.schema'
+import { CatsGuard } from './cats.guard'
+import { CatsService } from './cats.service'
+import { CreateCatDto } from './dto/create-cat.dto'
 
-const pubSub = new PubSub();
+const pubSub = new PubSub()
 
-@Resolver("Cat")
+@Resolver('Cat')
 export class CatsResolvers {
   constructor(private readonly catsService: CatsService) {}
 
   @Query()
   @UseGuards(CatsGuard)
   async getCats(): Promise<Cat[]> {
-    return this.catsService.findAll();
+    return this.catsService.findAll()
   }
 
-  @Query("cat")
+  @Query('cat')
   async findOneById(
-    @Args("id", ParseIntPipe)
+    @Args('id', ParseIntPipe)
     id: number
   ): Promise<Cat> {
-    return this.catsService.findOneById(id);
+    return this.catsService.findOneById(id)
   }
 
-  @Mutation("createCat")
-  async create(@Args("createCatInput") args: CreateCatDto): Promise<Cat> {
-    const createdCat = await this.catsService.create(args);
-    pubSub.publish("catCreated", { catCreated: createdCat });
-    return createdCat;
+  @Mutation('createCat')
+  async create(@Args('createCatInput') args: CreateCatDto): Promise<Cat> {
+    const createdCat = await this.catsService.create(args)
+    pubSub.publish('catCreated', { catCreated: createdCat })
+    return createdCat
   }
 
-  @Subscription("catCreated")
+  @Subscription('catCreated')
   catCreated(): AsyncIterator<string> {
-    return pubSub.asyncIterator<string>("catCreated");
+    return pubSub.asyncIterator<string>('catCreated')
   }
 }
