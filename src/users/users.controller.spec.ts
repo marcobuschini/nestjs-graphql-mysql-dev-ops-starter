@@ -5,11 +5,11 @@ import { User } from './user.model'
 
 describe('UsersController', () => {
   let usersController: UsersController
-  const user1 = new User()
+  const user1: Partial<User> = {}
   user1.firstName = 'First Name 1'
   user1.lastName = 'Last Name 1'
 
-  const user2 = new User()
+  const user2: Partial<User> = {}
   user2.firstName = 'First Name 2'
   user2.lastName = 'Last Name 2'
 
@@ -20,9 +20,7 @@ describe('UsersController', () => {
         {
           provide: UsersService,
           useValue: {
-            findAll: jest
-              .fn()
-              .mockResolvedValue([User.create(user1), User.create(user2)]),
+            findAll: jest.fn().mockResolvedValue([user1, user2]),
             findOne: jest.fn().mockResolvedValue(user1),
             create: jest
               .fn()
@@ -36,26 +34,26 @@ describe('UsersController', () => {
     usersController = app.get<UsersController>(UsersController)
   })
 
-  describe('root', () => {
-    it('findAll()', () => {
-      expect(usersController.findAll()).resolves.toBe([user1, user2])
+  describe('CR-D', () => {
+    it('findAll()', async () => {
+      await expect(usersController.findAll()).resolves.toEqual([user1, user2])
     })
 
-    it('findOne()', () => {
-      expect(usersController.findAll()).resolves.toBe(user1)
+    it('findOne()', async () => {
+      await expect(usersController.findOne('user1')).resolves.toEqual(user1)
     })
 
-    it('create()', () => {
-      expect(
+    it('create()', async () => {
+      await expect(
         usersController.create({
           firstName: user1.firstName,
           lastName: user1.lastName,
         })
-      ).resolves.toBe(user1)
+      ).resolves.toEqual(user1)
     })
 
-    it('remove()', () => {
-      expect(usersController.remove('user1')).resolves.toBe(user1)
+    it('remove()', async () => {
+      await expect(usersController.remove('user1')).resolves.toEqual(null)
     })
   })
 })
