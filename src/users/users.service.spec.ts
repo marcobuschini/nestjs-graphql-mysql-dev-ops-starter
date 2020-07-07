@@ -3,6 +3,8 @@ import { UsersService } from './users.service'
 import { User } from './user.model'
 import { SequelizeModule } from '@nestjs/sequelize'
 import { UsersModule } from './users.module'
+import { resolve } from 'path'
+import { config } from 'dotenv'
 
 describe('UsersService', () => {
   let usersService: UsersService
@@ -14,16 +16,25 @@ describe('UsersService', () => {
   user2.firstName = 'First Name 2'
   user2.lastName = 'Last Name 2'
 
+  beforeAll(() => {
+    const envFile =
+      '.env' +
+      (process.env.NODE_ENV !== 'prod' ? '.' + process.env.NODE_ENV : '')
+    const path = '../../' + envFile
+    console.log(`Reading configuration from ${envFile}`)
+    config({ path: resolve(__dirname, path) })
+  })
+
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       imports: [
         SequelizeModule.forRoot({
           dialect: 'mysql',
-          host: 'localhost',
-          port: 3306,
-          username: 'root',
-          password: 'password',
-          database: 'cats',
+          host: process.env.DB_HOST,
+          port: parseInt(process.env.DB_PORT),
+          username: process.env.DB_USERNAME,
+          password: process.env.DB_PASSWORD,
+          database: process.env.DB_SCHEMA,
           autoLoadModels: true,
           synchronize: true,
         }),
