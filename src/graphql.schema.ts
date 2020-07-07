@@ -4,29 +4,27 @@
  */
 
 /* tslint:disable */
-export abstract class CreateCatInput {
+/* eslint-disable */
+export interface CreateCatInput {
   name?: string
   age?: number
 }
 
-export abstract class Cat {
+export interface Cat {
   id?: number
   name?: string
   age?: number
 }
 
-export abstract class IMutation {
-  abstract createCat(createCatInput?: CreateCatInput): Cat | Promise<Cat>
+export interface IMutation {
+  createCat(createCatInput?: CreateCatInput): Cat | Promise<Cat>
 }
 
-export abstract class IQuery {
-  abstract getCats(): Cat[] | Promise<Cat[]>
-
-  abstract cat(id: string): Cat | Promise<Cat>
-
-  abstract temp__(): boolean | Promise<boolean>
+export interface IQuery {
+  getCats(): Cat[] | Promise<Cat[]>
+  cat(id: string): Cat | Promise<Cat>
 }
 
-export abstract class ISubscription {
-  abstract catCreated(): Cat | Promise<Cat>
+export interface ISubscription {
+  catCreated(): Cat | Promise<Cat>
 }
