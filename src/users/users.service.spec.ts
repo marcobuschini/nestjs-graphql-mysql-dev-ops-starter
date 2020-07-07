@@ -7,6 +7,7 @@ import { resolve } from 'path'
 import { config } from 'dotenv'
 
 describe('UsersService', () => {
+  let app: TestingModule
   let usersService: UsersService
   const user1: Partial<User> = {}
   user1.firstName = 'First Name 1'
@@ -26,7 +27,7 @@ describe('UsersService', () => {
   })
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    app = await Test.createTestingModule({
       imports: [
         SequelizeModule.forRoot({
           dialect: 'mysql',
@@ -44,6 +45,10 @@ describe('UsersService', () => {
     }).compile()
 
     usersService = app.get<UsersService>(UsersService)
+  })
+
+  afterEach(async () => {
+    app.close()
   })
 
   describe('CR-D', () => {
