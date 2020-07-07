@@ -1,21 +1,39 @@
 import { Injectable } from '@nestjs/common'
-import { Cat } from '../graphql.schema'
+import { InjectModel } from '@nestjs/sequelize'
+import { Sequelize } from 'sequelize-typescript'
+import { CreateCatDto } from './dto/create-cat.dto'
+import { Cat } from './cat.model'
 
 @Injectable()
 export class CatsService {
-  private readonly cats: Cat[] = [{ id: 1, name: 'Cat', age: 5 }]
+  constructor(
+    @InjectModel(Cat)
+    public readonly catModel: typeof Cat,
+    private readonly sequelize: Sequelize
+  ) {}
 
-  create(cat: Cat): Cat {
-    cat.id = this.cats.length + 1
-    this.cats.push(cat)
-    return cat
+  create(createCatDto: CreateCatDto): Promise<Cat> {
+    const cat = new Cat()
+    cat.age = createCatDto.age
+    cat.name = createCatDto.name
+
+    return cat.save()
   }
 
-  findAll(): Cat[] {
-    return this.cats
+  findAll(): Promise<Cat[]> {
+    return this.catModel.findAll()
   }
 
-  findOneById(id: number): Cat {
-    return this.cats.find((cat) => cat.id === id)
+  findOne(id: number): Promise<Cat> {
+    return this.catModel.findOne({
+      where: {
+        id,
+      },
+    })
+  }
+
+  async remove(id: number): Promise<void> {
+    const cat = await this.findOne(id)
+    await cat.destroy()
   }
 }

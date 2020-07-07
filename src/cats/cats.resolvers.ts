@@ -19,11 +19,11 @@ export class CatsResolvers {
   }
 
   @Query('cat')
-  async findOneById(
+  async findOne(
     @Args('id', ParseIntPipe)
     id: number
   ): Promise<Cat> {
-    return this.catsService.findOneById(id)
+    return this.catsService.findOne(id)
   }
 
   @Mutation('createCat')
