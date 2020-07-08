@@ -67,7 +67,7 @@ describe('CatsResolver', () => {
     app.close()
   })
 
-  describe('CR-D', () => {
+  describe('CR-D', async () => {
     it('create() and catCreated()', async () => {
       const catCreated = catsResolver.catCreated()
       const created1 = catsResolver.create({
@@ -90,17 +90,17 @@ describe('CatsResolver', () => {
 
     it('findAll()', async () => {
       const allCats = await catsResolver.getCats()
-      expect(allCats[0].name).toEqual(cat1.name)
-      expect(allCats[0].age).toEqual(cat1.age)
-      expect(allCats[1].name).toEqual(cat2.name)
-      expect(allCats[1].age).toEqual(cat2.age)
+      await expect(allCats[0].name).toEqual(cat1.name)
+      await expect(allCats[0].age).toEqual(cat1.age)
+      await expect(allCats[1].name).toEqual(cat2.name)
+      await expect(allCats[1].age).toEqual(cat2.age)
       id = allCats[0].id
     })
 
     it('findOne()', async () => {
       const cat = await catsResolver.findOne(id)
-      expect(cat.name).toEqual(cat1.name)
-      expect(cat.age).toEqual(cat1.age)
+      await expect(cat.name).toEqual(cat1.name)
+      await expect(cat.age).toEqual(cat1.age)
     })
   })
 })
