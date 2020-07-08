@@ -67,7 +67,7 @@ describe('CatsResolver', () => {
     app.close()
   })
 
-  describe('CR-D', async () => {
+  describe('CR-D', () => {
     it('create() and catCreated()', async () => {
       const catCreated = catsResolver.catCreated()
       const created1 = catsResolver.create({
