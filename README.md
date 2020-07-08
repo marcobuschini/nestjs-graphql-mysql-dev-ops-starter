@@ -10,7 +10,11 @@
 
 # Running
 
-This example requires a local MySQL installation. See `app.module.ts` for credentials, and make sure there are matching credentials in the database and the source code.
+This example requires a local MySQL installation.
+See `.env.example` for credentials, and make sure there are matching credentials in the database and the `.env` file.
+The `.env.dev` file contains variable definitions for the development environment.
+The `.env.test` file containst variable definitions for the test environment (used on TravisCI, too).
+The `.env` file is left uncommitted as it is supposed to hold production secrets.
 
 # Run the sample
 
@@ -18,8 +22,13 @@ Then, run Nest as usual:
 
 `npm run start`
 
+or, for development settings:
+
+`npm run start:dev`
+
 # Playground
 
+After running
 Point your browser at `http://localhost:3000/graphql`
 
 # A simple query
