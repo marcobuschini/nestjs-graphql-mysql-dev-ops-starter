@@ -1,0 +1,9 @@
+fixtures:
+  - model: User
+    data:
+      firstName: Henry
+      lastName: Richardson
+  - model: User
+    data:
+      firstName: Mary
+      lastName: Carter

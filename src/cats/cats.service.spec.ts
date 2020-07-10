@@ -10,11 +10,11 @@ describe('CatsService', () => {
   let app: TestingModule
   let catsService: CatsService
   const cat1: Partial<Cat> = {}
-  cat1.name = 'Nick Name 1'
+  cat1.name = 'Birch'
   cat1.age = 2
 
   const cat2: Partial<Cat> = {}
-  cat2.name = 'Nick Name 2'
+  cat2.name = 'Tabby'
   cat2.age = 5
 
   beforeAll(() => {

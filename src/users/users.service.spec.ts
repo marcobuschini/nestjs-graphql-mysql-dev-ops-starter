@@ -10,12 +10,12 @@ describe('UsersService', () => {
   let app: TestingModule
   let usersService: UsersService
   const user1: Partial<User> = {}
-  user1.firstName = 'First Name 1'
-  user1.lastName = 'Last Name 1'
+  user1.firstName = 'Henry'
+  user1.lastName = 'Richardson'
 
   const user2: Partial<User> = {}
-  user2.firstName = 'First Name 2'
-  user2.lastName = 'Last Name 2'
+  user2.firstName = 'Mary'
+  user2.lastName = 'Carter'
 
   beforeAll(() => {
     const envFile =

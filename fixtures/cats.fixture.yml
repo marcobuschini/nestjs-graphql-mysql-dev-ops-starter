@@ -1,0 +1,9 @@
+fixtures:
+  - model: Cat
+    data:
+      name: Birch
+      age: 2
+  - model: Cat
+    data:
+      name: Tabby
+      age: 5

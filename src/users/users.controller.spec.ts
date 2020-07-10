@@ -6,12 +6,12 @@ import { User } from './user.model'
 describe('UsersController', () => {
   let usersController: UsersController
   const user1: Partial<User> = {}
-  user1.firstName = 'First Name 1'
-  user1.lastName = 'Last Name 1'
+  user1.firstName = 'Henry'
+  user1.lastName = 'Richardson'
 
   const user2: Partial<User> = {}
-  user2.firstName = 'First Name 2'
-  user2.lastName = 'Last Name 2'
+  user2.firstName = 'Mary'
+  user2.lastName = 'Carter'
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
