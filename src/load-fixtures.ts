@@ -21,4 +21,6 @@ const sequelize = new Sequelize({
   models: [Cat, User],
 } as SequelizeOptions)
 
+sequelize.sync()
+
 loadFiles(['fixtures/**/*.fixture.yml'], sequelize.models)
