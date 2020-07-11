@@ -7,7 +7,8 @@ import { config } from 'dotenv'
 
 async function bootstrap(): Promise<void> {
   const envFile =
-    '.env' + (process.env.NODE_ENV !== 'prod' ? '.' + process.env.NODE_ENV : '')
+    '.env' +
+    (process.env.NODE_ENV !== 'production' ? '.' + process.env.NODE_ENV : '')
   const path = '../' + envFile
   console.log(`Reading configuration from ${envFile}`)
   const parsed = config({ path: resolve(__dirname, path) })
@@ -22,7 +23,7 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule)
   app.useGlobalPipes(new ValidationPipe())
 
-  if (process.env.NODE_ENV !== 'prod') {
+  if (process.env.NODE_ENV !== 'production') {
     const options = new DocumentBuilder()
       .setTitle('Users example')
       .setDescription('The users API description')
