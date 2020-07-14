@@ -7,7 +7,7 @@ node_js:
 
 env:
   global:
-    - CC_TEST_REPORTER_ID=ed1ea366255e5254c8eec511023e473279f3a5259884eb5f15968034209605d2
+    - CC_TEST_REPORTER_ID=acb0a765dd2f1e01f61ff0a206bcef6ca0f9a2a02cb979941edf9c11a5988ffb
     - NODE_ENV=test
 
 cache:
