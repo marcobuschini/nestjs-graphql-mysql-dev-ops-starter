@@ -16,9 +16,6 @@ async function bootstrap(): Promise<void> {
     console.error(`Unable to read configuration from ${envFile} file`)
     console.error(parsed.error)
   }
-  console.log(
-    `Database host is '${process.env.DB_HOST}' and schema is '${process.env.DB_SCHEMA}'`
-  )
 
   const app = await NestFactory.create(AppModule)
   app.useGlobalPipes(new ValidationPipe())
