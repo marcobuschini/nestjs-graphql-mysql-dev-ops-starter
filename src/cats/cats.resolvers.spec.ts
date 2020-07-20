@@ -64,7 +64,7 @@ describe('CatsResolver', () => {
   })
 
   afterEach(async () => {
-    app.close()
+    await app.close()
   })
 
   describe('CR-D', () => {
