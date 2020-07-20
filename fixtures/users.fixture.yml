@@ -1,9 +1,13 @@
 fixtures:
   - model: User
     data:
+      username: hrichardson
       firstName: Henry
       lastName: Richardson
+      password: password
   - model: User
     data:
+      username: mcarter
       firstName: Mary
       lastName: Carter
+      password: password

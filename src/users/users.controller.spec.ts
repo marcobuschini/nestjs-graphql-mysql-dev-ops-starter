@@ -46,8 +46,10 @@ describe('UsersController', () => {
     it('create()', async () => {
       await expect(
         usersController.create({
+          username: user1.username,
           firstName: user1.firstName,
           lastName: user1.lastName,
+          password: user1.password,
         })
       ).resolves.toEqual(user1)
     })

@@ -10,12 +10,16 @@ describe('UsersService', () => {
   let app: TestingModule
   let usersService: UsersService
   const user1: Partial<User> = {}
+  user1.username = 'hrichardson'
   user1.firstName = 'Henry'
   user1.lastName = 'Richardson'
+  user1.password = 'password'
 
   const user2: Partial<User> = {}
+  user2.username = 'mcarter'
   user2.firstName = 'Mary'
   user2.lastName = 'Carter'
+  user2.password = 'password'
 
   beforeAll(() => {
     const envFile =
@@ -53,18 +57,28 @@ describe('UsersService', () => {
 
   describe('CR-D', () => {
     it('create()', async () => {
-      await expect(
-        usersService.create({
-          firstName: user1.firstName,
-          lastName: user1.lastName,
-        })
-      ).resolves.toMatchObject(user1)
-      await expect(
-        usersService.create({
-          firstName: user2.firstName,
-          lastName: user2.lastName,
-        })
-      ).resolves.toMatchObject(user2)
+      const created1 = await usersService.create({
+        username: user1.username,
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+        password: user1.password,
+      })
+      await expect(created1).toMatchObject({
+        username: user1.username,
+        firstName: user1.firstName,
+        lastName: user1.lastName,
+      })
+      const created2 = await usersService.create({
+        username: user2.username,
+        firstName: user2.firstName,
+        lastName: user2.lastName,
+        password: user2.password,
+      })
+      await expect(created2).toMatchObject({
+        username: user2.username,
+        firstName: user2.firstName,
+        lastName: user2.lastName,
+      })
     })
 
     it('findAll()', async () => {
@@ -79,6 +93,11 @@ describe('UsersService', () => {
       const user = await usersService.findOne('1')
       await expect(user.firstName).toEqual(user1.firstName)
       await expect(user.lastName).toEqual(user1.lastName)
+    })
+
+    it('checkPassword()', async () => {
+      const user = await usersService.findOne('1')
+      await expect(user.checkPassword('password')).toBeTruthy()
     })
 
     it('remove()', async () => {

@@ -4,6 +4,11 @@ import { UsersModule } from './users/users.module'
 import { GraphQLModule } from '@nestjs/graphql'
 import { CatsModule } from './cats/cats.module'
 import { SequelizeConfigService } from './sequelize-config.service'
+import { AppService } from './app.service'
+import { AppController } from './app.controller'
+import { GoogleStrategy } from './google.strategy'
+import { WhoAmIController } from './users/whoami.controller'
+import { AuthModule } from './auth/auth.module'
 
 @Module({
   imports: [
@@ -17,6 +22,9 @@ import { SequelizeConfigService } from './sequelize-config.service'
       installSubscriptionHandlers: true,
       playground: true,
     }),
+    AuthModule,
   ],
+  providers: [AppService, GoogleStrategy],
+  controllers: [AppController, WhoAmIController],
 })
 export class AppModule {}
