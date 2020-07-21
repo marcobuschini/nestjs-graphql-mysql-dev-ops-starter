@@ -66,14 +66,14 @@ describe('CatsResolver', () => {
           catCreated: {
             name: cat1.name,
             age: cat1.age,
-            id: null,
+            id: 3,
           },
         },
       })
       await expect(created1).resolves.toMatchObject({
         name: cat1.name,
         age: cat1.age,
-        id: null,
+        id: 3,
       })
 
       const created2: Promise<Cat> = catsResolver.create({
@@ -85,14 +85,14 @@ describe('CatsResolver', () => {
           catCreated: {
             name: cat2.name,
             age: cat2.age,
-            id: null,
+            id: 4,
           },
         },
       })
       await expect(created2).resolves.toMatchObject({
         name: cat2.name,
         age: cat2.age,
-        id: null,
+        id: 4,
       })
     })
 

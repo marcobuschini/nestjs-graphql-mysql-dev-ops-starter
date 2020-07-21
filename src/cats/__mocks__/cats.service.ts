@@ -1,26 +1,33 @@
 import { CreateCatDto } from '../dto/create-cat.dto'
-import { Cat } from '../cat.model'
 import { of } from 'rxjs'
+import { Cat } from 'src/graphql.schema'
 
 export class CatsService {
+  private index = 1
   private cats = new Array<Cat>()
 
   constructor() {
-    const cat1 = new Cat()
-    cat1.name = 'Birch'
-    cat1.age = 2
+    const cat1: Partial<Cat> = {
+      id: this.index++,
+      name: 'Birch',
+      age: 2,
+    }
     this.cats.push(cat1)
 
-    const cat2 = new Cat()
-    cat2.name = 'Tabby'
-    cat2.age = 5
+    const cat2: Partial<Cat> = {
+      id: this.index++,
+      name: 'Tabby',
+      age: 5,
+    }
     this.cats.push(cat2)
   }
 
   create(createCatDto: CreateCatDto): Promise<Cat> {
-    const cat = new Cat()
-    cat.name = createCatDto.name
-    cat.age = createCatDto.age
+    const cat: Partial<Cat> = {
+      id: this.index++,
+      name: createCatDto.name,
+      age: createCatDto.age,
+    }
     this.cats.push(cat)
     return of(cat).toPromise()
   }
