@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/marcobuschini/nestjs-graphql-mysql-dev-ops-starter.svg?branch=master)](https://travis-ci.org/marcobuschini/nestjs-graphql-mysql-dev-ops-starter)
 [![Coverage Status](https://coveralls.io/repos/github/marcobuschini/nestjs-graphql-mysql-dev-ops-starter/badge.svg?branch=master)](https://coveralls.io/github/marcobuschini/nestjs-graphql-mysql-dev-ops-starter?branch=master)
-[![Maintainability](https://api.codeclimate.com/v1/badges/61f98d04974944651e7e/maintainability)](https://codeclimate.com/github/marcobuschini/nestjs-graphql-mysql-dev-ops-starter/maint ainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/61f98d04974944651e7e/maintainability)](https://codeclimate.com/github/marcobuschini/nestjs-graphql-mysql-dev-ops-starter/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/61f98d04974944651e7e/test_coverage)](https://codeclimate.com/github/marcobuschini/nestjs-graphql-mysql-dev-ops-starter/test_coverage)
 [![Commitizen Friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen)](http://commitizen.github.io/cz-cli/)
 
