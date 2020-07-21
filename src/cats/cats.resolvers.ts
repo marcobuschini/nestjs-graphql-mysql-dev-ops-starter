@@ -29,12 +29,16 @@ export class CatsResolvers {
   @Mutation('createCat')
   async create(@Args('createCatInput') args: CreateCatDto): Promise<Cat> {
     const createdCat = await this.catsService.create(args)
-    pubSub.publish('catCreated', { catCreated: createdCat })
+    void pubSub.publish('catCreated', { catCreated: createdCat })
     return createdCat
   }
 
   @Subscription('catCreated')
-  catCreated(): AsyncIterator<string> {
+  catCreated(): AsyncIterator<
+    string,
+    { catCreated: Cat },
+    { catCreated: Cat }
+  > {
     return pubSub.asyncIterator<string>('catCreated')
   }
 }
