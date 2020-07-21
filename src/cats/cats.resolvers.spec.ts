@@ -61,32 +61,32 @@ describe('CatsResolver', () => {
         name: cat1.name,
         age: cat1.age,
       })
-      await expect(created1.name).toEqual(cat1.name)
-      await expect(created1.age).toEqual(cat1.age)
-      // await expect(await catCreated.next()).toEqual({})
+      expect(created1.name).toEqual(cat1.name)
+      expect(created1.age).toEqual(cat1.age)
+      // await expect(catCreated.next()).resolves.toEqual({})
 
       const created2: Cat = await catsResolver.create({
         name: cat2.name,
         age: cat2.age,
       })
-      await expect(created2.name).toEqual(cat2.name)
-      await expect(created2.age).toEqual(cat2.age)
-      // await expect(await catCreated.next()).toEqual({})
+      expect(created2.name).toEqual(cat2.name)
+      expect(created2.age).toEqual(cat2.age)
+      // await expect(catCreated.next()).resolves.toEqual({})
     })
 
     it('findAll()', async () => {
       const allCats = await catsResolver.getCats()
-      await expect(allCats[0].name).toEqual(cat1.name)
-      await expect(allCats[0].age).toEqual(cat1.age)
-      await expect(allCats[1].name).toEqual(cat2.name)
-      await expect(allCats[1].age).toEqual(cat2.age)
+      expect(allCats[0].name).toEqual(cat1.name)
+      expect(allCats[0].age).toEqual(cat1.age)
+      expect(allCats[1].name).toEqual(cat2.name)
+      expect(allCats[1].age).toEqual(cat2.age)
     })
 
     it('findOne()', async () => {
       const allCats = await catsResolver.getCats()
       const cat = await catsResolver.findOne(allCats[0].id)
-      await expect(cat.name).toEqual(cat1.name)
-      await expect(cat.age).toEqual(cat1.age)
+      expect(cat.name).toEqual(cat1.name)
+      expect(cat.age).toEqual(cat1.age)
     })
   })
 })

@@ -71,17 +71,17 @@ describe('CatsService', () => {
 
     it('findAll()', async () => {
       const allCats = await catsService.findAll()
-      await expect(allCats[0].name).toEqual(cat1.name)
-      await expect(allCats[0].age).toEqual(cat1.age)
-      await expect(allCats[1].name).toEqual(cat2.name)
-      await expect(allCats[1].age).toEqual(cat2.age)
+      expect(allCats[0].name).toEqual(cat1.name)
+      expect(allCats[0].age).toEqual(cat1.age)
+      expect(allCats[1].name).toEqual(cat2.name)
+      expect(allCats[1].age).toEqual(cat2.age)
       id = allCats[0].id
     })
 
     it('findOne()', async () => {
       const cat = await catsService.findOne(id)
-      await expect(cat.name).toEqual(cat1.name)
-      await expect(cat.age).toEqual(cat1.age)
+      expect(cat.name).toEqual(cat1.name)
+      expect(cat.age).toEqual(cat1.age)
     })
 
     it('remove()', async () => {

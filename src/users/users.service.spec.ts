@@ -63,7 +63,7 @@ describe('UsersService', () => {
         lastName: user1.lastName,
         password: user1.password,
       })
-      await expect(created1).toMatchObject({
+      expect(created1).toMatchObject({
         username: user1.username,
         firstName: user1.firstName,
         lastName: user1.lastName,
@@ -74,7 +74,7 @@ describe('UsersService', () => {
         lastName: user2.lastName,
         password: user2.password,
       })
-      await expect(created2).toMatchObject({
+      expect(created2).toMatchObject({
         username: user2.username,
         firstName: user2.firstName,
         lastName: user2.lastName,
@@ -83,21 +83,21 @@ describe('UsersService', () => {
 
     it('findAll()', async () => {
       const allUsers = await usersService.findAll()
-      await expect(allUsers[0].firstName).toEqual(user1.firstName)
-      await expect(allUsers[0].lastName).toEqual(user1.lastName)
-      await expect(allUsers[1].firstName).toEqual(user2.firstName)
-      await expect(allUsers[1].lastName).toEqual(user2.lastName)
+      expect(allUsers[0].firstName).toEqual(user1.firstName)
+      expect(allUsers[0].lastName).toEqual(user1.lastName)
+      expect(allUsers[1].firstName).toEqual(user2.firstName)
+      expect(allUsers[1].lastName).toEqual(user2.lastName)
     })
 
     it('findOne()', async () => {
       const user = await usersService.findOne('1')
-      await expect(user.firstName).toEqual(user1.firstName)
-      await expect(user.lastName).toEqual(user1.lastName)
+      expect(user.firstName).toEqual(user1.firstName)
+      expect(user.lastName).toEqual(user1.lastName)
     })
 
     it('checkPassword()', async () => {
       const user = await usersService.findOne('1')
-      await expect(user.checkPassword('password')).toBeTruthy()
+      expect(user.checkPassword('password')).toBeTruthy()
     })
 
     it('remove()', async () => {
