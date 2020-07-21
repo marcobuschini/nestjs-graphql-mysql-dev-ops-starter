@@ -6,10 +6,10 @@ import { CatsGuard } from './cats.guard'
 import { CatsService } from './cats.service'
 import { CreateCatDto } from './dto/create-cat.dto'
 
-const pubSub = new PubSub()
-
 @Resolver('Cat')
 export class CatsResolvers {
+  static readonly pubSub = new PubSub()
+
   constructor(private readonly catsService: CatsService) {}
 
   @Query()
@@ -29,7 +29,7 @@ export class CatsResolvers {
   @Mutation('createCat')
   async create(@Args('createCatInput') args: CreateCatDto): Promise<Cat> {
     const createdCat = await this.catsService.create(args)
-    void pubSub.publish('catCreated', { catCreated: createdCat })
+    void CatsResolvers.pubSub.publish('catCreated', { catCreated: createdCat })
     return createdCat
   }
 
@@ -39,6 +39,6 @@ export class CatsResolvers {
     { catCreated: Cat },
     { catCreated: Cat }
   > {
-    return pubSub.asyncIterator<string>('catCreated')
+    return CatsResolvers.pubSub.asyncIterator<string>('catCreated')
   }
 }
