@@ -1,11 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { CatsService } from './cats.service'
-import { Cat } from './cat.model'
+import { Cat } from '../graphql.schema'
 import { CatsResolvers } from './cats.resolvers'
-import { SequelizeModule } from '@nestjs/sequelize'
 import { CatsModule } from './cats.module'
 import { resolve } from 'path'
 import { config } from 'dotenv'
+import { SequelizeModule } from '@nestjs/sequelize'
+
+jest.mock('./cats.service')
 
 describe('CatsResolver', () => {
   let app: TestingModule
@@ -17,8 +19,6 @@ describe('CatsResolver', () => {
   const cat2: Partial<Cat> = {}
   cat2.name = 'Tabby'
   cat2.age = 5
-
-  let id = 0
 
   beforeAll(() => {
     const envFile =
@@ -44,20 +44,7 @@ describe('CatsResolver', () => {
         }),
         CatsModule,
       ],
-      providers: [
-        {
-          provide: CatsService,
-          useValue: {
-            findAll: jest.fn().mockResolvedValue([cat1, cat2]),
-            findOne: jest.fn().mockResolvedValue(cat1),
-            create: jest
-              .fn()
-              .mockImplementation((cat: Cat) => Promise.resolve(cat)),
-            remove: jest.fn().mockResolvedValue(null),
-          },
-        },
-        CatsResolvers,
-      ],
+      providers: [CatsService, CatsResolvers],
     }).compile()
 
     catsResolver = app.get<CatsResolvers>(CatsResolvers)
@@ -69,23 +56,22 @@ describe('CatsResolver', () => {
 
   describe('CR-D', () => {
     it('create() and catCreated()', async () => {
-      const catCreated = catsResolver.catCreated()
-      const created1 = catsResolver.create({
+      // const catCreated = catsResolver.catCreated()
+      const created1: Cat = await catsResolver.create({
         name: cat1.name,
         age: cat1.age,
       })
-      const created2 = catsResolver.create({
+      await expect(created1.name).toEqual(cat1.name)
+      await expect(created1.age).toEqual(cat1.age)
+      // await expect(await catCreated.next()).toEqual({})
+
+      const created2: Cat = await catsResolver.create({
         name: cat2.name,
         age: cat2.age,
       })
-      expect(created1).resolves.toMatchObject(cat1)
-      expect(created2).resolves.toMatchObject(cat2)
-      expect(catCreated.next()).resolves.toMatchObject({
-        value: { catCreated: created1 },
-      })
-      expect(catCreated.next()).resolves.toMatchObject({
-        value: { catCreated: created2 },
-      })
+      await expect(created2.name).toEqual(cat2.name)
+      await expect(created2.age).toEqual(cat2.age)
+      // await expect(await catCreated.next()).toEqual({})
     })
 
     it('findAll()', async () => {
@@ -94,11 +80,11 @@ describe('CatsResolver', () => {
       await expect(allCats[0].age).toEqual(cat1.age)
       await expect(allCats[1].name).toEqual(cat2.name)
       await expect(allCats[1].age).toEqual(cat2.age)
-      id = allCats[0].id
     })
 
     it('findOne()', async () => {
-      const cat = await catsResolver.findOne(id)
+      const allCats = await catsResolver.getCats()
+      const cat = await catsResolver.findOne(allCats[0].id)
       await expect(cat.name).toEqual(cat1.name)
       await expect(cat.age).toEqual(cat1.age)
     })
