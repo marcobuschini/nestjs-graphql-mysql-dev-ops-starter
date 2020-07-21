@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
-import { Sequelize } from 'sequelize-typescript'
 import { CreateCatDto } from './dto/create-cat.dto'
 import { Cat } from './cat.model'
 
@@ -8,8 +7,7 @@ import { Cat } from './cat.model'
 export class CatsService {
   constructor(
     @InjectModel(Cat)
-    public readonly catModel: typeof Cat,
-    private readonly sequelize: Sequelize
+    public readonly catModel: typeof Cat
   ) {}
 
   create(createCatDto: CreateCatDto): Promise<Cat> {
