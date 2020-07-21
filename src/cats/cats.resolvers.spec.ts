@@ -56,22 +56,44 @@ describe('CatsResolver', () => {
 
   describe('CR-D', () => {
     it('create() and catCreated()', async () => {
-      // const catCreated = catsResolver.catCreated()
-      const created1: Cat = await catsResolver.create({
+      const catCreated = catsResolver.catCreated()
+      const created1: Promise<Cat> = catsResolver.create({
         name: cat1.name,
         age: cat1.age,
       })
-      expect(created1.name).toEqual(cat1.name)
-      expect(created1.age).toEqual(cat1.age)
-      // await expect(catCreated.next()).resolves.toEqual({})
+      await expect(catCreated.next()).resolves.toMatchObject({
+        value: {
+          catCreated: {
+            name: cat1.name,
+            age: cat1.age,
+            id: null,
+          },
+        },
+      })
+      await expect(created1).resolves.toMatchObject({
+        name: cat1.name,
+        age: cat1.age,
+        id: null,
+      })
 
-      const created2: Cat = await catsResolver.create({
+      const created2: Promise<Cat> = catsResolver.create({
         name: cat2.name,
         age: cat2.age,
       })
-      expect(created2.name).toEqual(cat2.name)
-      expect(created2.age).toEqual(cat2.age)
-      // await expect(catCreated.next()).resolves.toEqual({})
+      await expect(catCreated.next()).resolves.toMatchObject({
+        value: {
+          catCreated: {
+            name: cat2.name,
+            age: cat2.age,
+            id: null,
+          },
+        },
+      })
+      await expect(created2).resolves.toMatchObject({
+        name: cat2.name,
+        age: cat2.age,
+        id: null,
+      })
     })
 
     it('findAll()', async () => {
