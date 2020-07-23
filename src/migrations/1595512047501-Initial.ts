@@ -58,6 +58,14 @@ export class Initial1595512047501 implements MigrationInterface {
         name: 'age',
         type: 'integer',
       },
+      {
+        name: 'createdAt',
+        type: 'timestamp',
+      },
+      {
+        name: 'updatedAt',
+        type: 'timestamp',
+      },
     ],
   })
 
