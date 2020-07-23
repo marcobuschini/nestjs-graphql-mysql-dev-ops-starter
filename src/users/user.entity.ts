@@ -1,19 +1,22 @@
-import { Column, Model, Table } from 'sequelize-typescript'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import { sha512 } from 'js-sha512'
 import { randomBytes } from 'crypto'
 
-@Table({ tableName: 'user' })
-export class User extends Model<User> {
-  @Column
+@Entity({ name: 'user' })
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number
+
+  @Column()
   firstName: string
 
-  @Column
+  @Column()
   lastName: string
 
-  @Column
+  @Column()
   username: string
 
-  @Column({ field: 'password' })
+  @Column({ name: 'password' })
   private encryptedPassword: string
 
   set password(password: string) {
@@ -26,10 +29,10 @@ export class User extends Model<User> {
     this.encryptedPassword = temp
   }
 
-  @Column
+  @Column()
   private salt: string
 
-  @Column({ defaultValue: true })
+  @Column({ default: true })
   isActive: boolean
 
   public checkPassword(password: string): boolean {

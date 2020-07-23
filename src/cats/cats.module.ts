@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common'
 import { CatsResolvers } from './cats.resolvers'
 import { CatsService } from './cats.service'
-import { SequelizeModule } from '@nestjs/sequelize'
-import { Cat } from './cat.model'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { Cat } from './cat.entity'
 
 @Module({
-  imports: [SequelizeModule.forFeature([Cat])],
-  exports: [SequelizeModule],
+  imports: [TypeOrmModule.forFeature([Cat])],
+  exports: [TypeOrmModule],
   providers: [CatsService, CatsResolvers],
 })
 export class CatsModule {}

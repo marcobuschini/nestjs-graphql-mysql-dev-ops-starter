@@ -1,19 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { CatsService } from './cats.service'
-import { Cat } from './cat.model'
-import { SequelizeModule } from '@nestjs/sequelize'
-import { CatsModule } from './cats.module'
+import { Cat } from './cat.entity'
 import { resolve } from 'path'
 import { config } from 'dotenv'
+import { getRepositoryToken } from '@nestjs/typeorm'
+import { of } from 'rxjs'
 
 describe('CatsService', () => {
   let app: TestingModule
   let catsService: CatsService
-  const cat1: Partial<Cat> = {}
+
+  const cat1 = new Cat()
   cat1.name = 'Birch'
   cat1.age = 2
 
-  const cat2: Partial<Cat> = {}
+  const cat2 = new Cat()
   cat2.name = 'Tabby'
   cat2.age = 5
 
@@ -30,20 +31,19 @@ describe('CatsService', () => {
 
   beforeEach(async () => {
     app = await Test.createTestingModule({
-      imports: [
-        SequelizeModule.forRoot({
-          dialect: 'mysql',
-          host: process.env.DB_HOST,
-          port: parseInt(process.env.DB_PORT),
-          username: process.env.DB_USERNAME,
-          password: process.env.DB_PASSWORD,
-          database: process.env.DB_SCHEMA,
-          autoLoadModels: true,
-          synchronize: true,
-        }),
-        CatsModule,
+      providers: [
+        CatsService,
+        {
+          provide: getRepositoryToken(Cat),
+          useValue: {
+            find: (): Promise<Cat[]> => of([cat1, cat2]).toPromise(),
+            findOne: ({ where: { id } }): Promise<Cat> =>
+              of([cat1, cat2].find((c) => c.id == id)).toPromise(),
+            save: (c: Cat): Promise<Cat> => of(c).toPromise(),
+            remove: (): Promise<void> => of(undefined).toPromise(),
+          },
+        },
       ],
-      providers: [CatsService],
     }).compile()
 
     catsService = app.get<CatsService>(CatsService)

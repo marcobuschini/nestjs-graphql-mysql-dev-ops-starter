@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common'
-import { InjectModel } from '@nestjs/sequelize'
-import { Sequelize } from 'sequelize-typescript'
 import { CreateUserDto } from './dto/create-user.dto'
-import { User } from './user.model'
+import { User } from './user.entity'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User)
-    private readonly userModel: typeof User,
-    private readonly sequelize: Sequelize
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>
   ) {}
 
   create(createUserDto: CreateUserDto): Promise<User> {
@@ -19,15 +18,15 @@ export class UsersService {
     user.lastName = createUserDto.lastName
     user.password = createUserDto.password
 
-    return user.save()
+    return this.userRepository.save(user)
   }
 
   async findAll(): Promise<User[]> {
-    return this.userModel.findAll()
+    return this.userRepository.find()
   }
 
   findOne(id: string): Promise<User> {
-    return this.userModel.findOne({
+    return this.userRepository.findOne({
       where: {
         id,
       },
@@ -36,6 +35,6 @@ export class UsersService {
 
   async remove(id: string): Promise<void> {
     const user = await this.findOne(id)
-    await user.destroy()
+    await this.userRepository.remove(user)
   }
 }

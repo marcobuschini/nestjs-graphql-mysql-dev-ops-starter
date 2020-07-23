@@ -1,20 +1,17 @@
 import { Injectable } from '@nestjs/common'
-import {
-  SequelizeOptionsFactory,
-  SequelizeModuleOptions,
-} from '@nestjs/sequelize'
+import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm'
 
 @Injectable()
-export class SequelizeConfigService implements SequelizeOptionsFactory {
-  createSequelizeOptions(): SequelizeModuleOptions {
+export class TypeOrmConfigService implements TypeOrmOptionsFactory {
+  createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
-      dialect: 'mysql',
+      type: 'mysql',
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_SCHEMA,
-      autoLoadModels: true,
+      autoLoadEntities: true,
       synchronize: true,
     }
   }

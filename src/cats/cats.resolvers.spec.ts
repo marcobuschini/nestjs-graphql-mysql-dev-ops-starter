@@ -2,10 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { CatsService } from './cats.service'
 import { Cat } from '../graphql.schema'
 import { CatsResolvers } from './cats.resolvers'
-import { CatsModule } from './cats.module'
 import { resolve } from 'path'
 import { config } from 'dotenv'
-import { SequelizeModule } from '@nestjs/sequelize'
 
 jest.mock('./cats.service')
 
@@ -31,19 +29,6 @@ describe('CatsResolver', () => {
 
   beforeEach(async () => {
     app = await Test.createTestingModule({
-      imports: [
-        SequelizeModule.forRoot({
-          dialect: 'mysql',
-          host: process.env.DB_HOST,
-          port: parseInt(process.env.DB_PORT),
-          username: process.env.DB_USERNAME,
-          password: process.env.DB_PASSWORD,
-          database: process.env.DB_SCHEMA,
-          autoLoadModels: true,
-          synchronize: true,
-        }),
-        CatsModule,
-      ],
       providers: [CatsService, CatsResolvers],
     }).compile()
 

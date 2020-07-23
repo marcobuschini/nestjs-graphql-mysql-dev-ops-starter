@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common'
-import { InjectModel } from '@nestjs/sequelize'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
 import { CreateCatDto } from './dto/create-cat.dto'
-import { Cat } from './cat.model'
+import { Cat } from './cat.entity'
 
 @Injectable()
 export class CatsService {
   constructor(
-    @InjectModel(Cat)
-    public readonly catModel: typeof Cat
+    @InjectRepository(Cat)
+    public readonly catRepository: Repository<Cat>
   ) {}
 
   create(createCatDto: CreateCatDto): Promise<Cat> {
@@ -15,15 +16,15 @@ export class CatsService {
     cat.age = createCatDto.age
     cat.name = createCatDto.name
 
-    return cat.save()
+    return this.catRepository.save(cat)
   }
 
   findAll(): Promise<Cat[]> {
-    return this.catModel.findAll()
+    return this.catRepository.find()
   }
 
   findOne(id: number): Promise<Cat> {
-    return this.catModel.findOne({
+    return this.catRepository.findOne({
       where: {
         id,
       },
@@ -32,6 +33,6 @@ export class CatsService {
 
   async remove(id: number): Promise<void> {
     const cat = await this.findOne(id)
-    await cat.destroy()
+    await this.catRepository.remove(cat)
   }
 }

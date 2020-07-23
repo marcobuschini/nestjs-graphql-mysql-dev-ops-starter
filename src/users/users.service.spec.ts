@@ -1,21 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { UsersService } from './users.service'
-import { User } from './user.model'
-import { SequelizeModule } from '@nestjs/sequelize'
-import { UsersModule } from './users.module'
+import { User } from './user.entity'
 import { resolve } from 'path'
 import { config } from 'dotenv'
+import { getRepositoryToken } from '@nestjs/typeorm'
+import { of } from 'rxjs'
 
 describe('UsersService', () => {
   let app: TestingModule
   let usersService: UsersService
-  const user1: Partial<User> = {}
+  const user1 = new User()
+  user1.id = 1
   user1.username = 'hrichardson'
   user1.firstName = 'Henry'
   user1.lastName = 'Richardson'
   user1.password = 'password'
 
-  const user2: Partial<User> = {}
+  const user2 = new User()
+  user2.id = 2
   user2.username = 'mcarter'
   user2.firstName = 'Mary'
   user2.lastName = 'Carter'
@@ -32,20 +34,19 @@ describe('UsersService', () => {
 
   beforeEach(async () => {
     app = await Test.createTestingModule({
-      imports: [
-        SequelizeModule.forRoot({
-          dialect: 'mysql',
-          host: process.env.DB_HOST,
-          port: parseInt(process.env.DB_PORT),
-          username: process.env.DB_USERNAME,
-          password: process.env.DB_PASSWORD,
-          database: process.env.DB_SCHEMA,
-          autoLoadModels: true,
-          synchronize: true,
-        }),
-        UsersModule,
+      providers: [
+        {
+          provide: getRepositoryToken(User),
+          useValue: {
+            find: (): Promise<User[]> => of([user1, user2]).toPromise(),
+            findOne: ({ where: { id } }): Promise<User> =>
+              of([user1, user2].find((u) => u.id == id)).toPromise(),
+            save: (u: User): Promise<User> => of(u).toPromise(),
+            remove: (): Promise<void> => of(undefined).toPromise(),
+          },
+        },
+        UsersService,
       ],
-      providers: [UsersService],
     }).compile()
 
     usersService = app.get<UsersService>(UsersService)
