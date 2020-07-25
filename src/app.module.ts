@@ -9,6 +9,8 @@ import { GoogleStrategy } from './google.strategy'
 import { WhoAmIController } from './users/whoami.controller'
 import { AuthModule } from './auth/auth.module'
 import { TypeOrmConfigService } from './typeorm-config.service'
+import { AuthService } from './auth/auth.service'
+import { UsersService } from './users/users.service'
 
 @Module({
   imports: [
@@ -24,7 +26,7 @@ import { TypeOrmConfigService } from './typeorm-config.service'
     }),
     AuthModule,
   ],
-  providers: [AppService, GoogleStrategy],
+  providers: [AppService, AuthService, GoogleStrategy, UsersService],
   controllers: [AppController, WhoAmIController],
 })
 export class AppModule {}

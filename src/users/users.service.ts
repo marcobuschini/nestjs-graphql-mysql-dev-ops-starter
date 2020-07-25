@@ -25,12 +25,11 @@ export class UsersService {
     return this.userRepository.find()
   }
 
-  findOne(id: string): Promise<User> {
-    return this.userRepository.findOne({
-      where: {
-        id,
-      },
-    })
+  findOne(username: string): Promise<User> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .where('user.username = :username', { username: username })
+      .getOne()
   }
 
   async remove(id: string): Promise<void> {

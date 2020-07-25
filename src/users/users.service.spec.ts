@@ -43,6 +43,12 @@ describe('UsersService', () => {
               of([user1, user2].find((u) => u.id == id)).toPromise(),
             save: (u: User): Promise<User> => of(u).toPromise(),
             remove: (): Promise<void> => of(undefined).toPromise(),
+            createQueryBuilder: jest.fn(() => ({
+              offset: jest.fn().mockReturnThis(),
+              limit: jest.fn().mockReturnThis(),
+              getOne: jest.fn().mockReturnValueOnce(user1),
+              where: jest.fn().mockReturnThis(),
+            })),
           },
         },
         UsersService,
