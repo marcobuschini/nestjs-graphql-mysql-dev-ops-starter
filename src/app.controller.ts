@@ -7,6 +7,8 @@ import { AuthService } from './auth/auth.service'
 import { UsersService } from './users/users.service'
 import { User } from './users/user.entity'
 import { JwtAuthGuard } from './auth/jwt-auth.guard'
+import { from } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 @Controller()
 export class AppController {
@@ -40,7 +42,19 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Req() req: Request): Promise<User> {
-    return this.usersService.findOne((req.user as User).username)
+  getProfile(@Req() req: Request): Promise<Partial<User>> {
+    return from(this.usersService.findOne((req.user as User).username))
+      .pipe(
+        map((i) => {
+          return {
+            id: i.id,
+            firstName: i.firstName,
+            lastName: i.lastName,
+            username: i.username,
+            isActive: i.isActive,
+          }
+        })
+      )
+      .toPromise()
   }
 }
