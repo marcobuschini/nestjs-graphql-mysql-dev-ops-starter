@@ -38,6 +38,19 @@ describe('AuthService', () => {
               isActive: true,
               checkPassword: (password) => password === 'password',
             } as unknown) as User),
+            findOneByRefreshToken: jest.fn().mockResolvedValue(({
+              id: 1,
+              username: 'user',
+              firstName: 'First',
+              lastName: 'Last',
+              password: 'test',
+              encryptedPassword:
+                'e0578bc3977fcbedb81e1e6a8a1603e9287e2f3572b30de90171fa56d67062e13062f0566f42d6c3be1ca67cbc9963c9f978d6f468053b06d0acec25986e1b1d',
+              salt:
+                '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
+              isActive: true,
+              checkPassword: (password) => password === 'password',
+            } as unknown) as User),
           },
         },
         {
@@ -51,7 +64,6 @@ describe('AuthService', () => {
               limit: jest.fn().mockReturnThis(),
               innerJoinAndSelect: jest.fn().mockReturnThis(),
               getOne: jest.fn().mockReturnValueOnce({
-                refreshToken: 'refresh_token',
                 user: ({
                   id: 1,
                   username: 'user',
@@ -65,7 +77,7 @@ describe('AuthService', () => {
                   isActive: true,
                   checkPassword: (password) => password === 'password',
                 } as unknown) as User,
-              } as RefreshToken),
+              }),
               where: jest.fn().mockReturnThis(),
             })),
           },
@@ -97,6 +109,13 @@ describe('AuthService', () => {
 
     const token = await service.login(user)
     await expect(token).toEqual({
+      access_token: 'test_token',
+      refresh_token: undefined,
+    })
+  })
+
+  it('should refresh the token', async () => {
+    await expect(service.refresh('refresh_token')).resolves.toEqual({
       access_token: 'test_token',
       refresh_token: undefined,
     })
