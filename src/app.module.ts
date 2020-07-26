@@ -6,7 +6,6 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AppService } from './app.service'
 import { AppController } from './app.controller'
 import { GoogleStrategy } from './google.strategy'
-import { WhoAmIController } from './users/whoami.controller'
 import { AuthModule } from './auth/auth.module'
 import { TypeOrmConfigService } from './typeorm-config.service'
 import { AuthService } from './auth/auth.service'
@@ -27,6 +26,6 @@ import { UsersService } from './users/users.service'
     AuthModule,
   ],
   providers: [AppService, AuthService, GoogleStrategy, UsersService],
-  controllers: [AppController, WhoAmIController],
+  controllers: [AppController],
 })
 export class AppModule {}
