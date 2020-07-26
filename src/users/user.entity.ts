@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
 import { sha512 } from 'js-sha512'
 import { randomBytes } from 'crypto'
+import { RefreshToken } from '../auth/refresh-token.entity'
 
 @Entity({ name: 'user' })
 export class User {
@@ -34,6 +35,9 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean
+
+  @OneToMany(() => RefreshToken, (refresh_token) => refresh_token.user)
+  refreshTokens: RefreshToken[]
 
   public checkPassword(password: string): boolean {
     let temp = password

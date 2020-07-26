@@ -4,11 +4,11 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { CatsModule } from './cats/cats.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AppService } from './app.service'
-import { AppController } from './app.controller'
 import { GoogleStrategy } from './google.strategy'
 import { AuthModule } from './auth/auth.module'
 import { TypeOrmConfigService } from './typeorm-config.service'
 import { AuthService } from './auth/auth.service'
+import { AuthController } from './auth/auth.controller'
 import { UsersService } from './users/users.service'
 
 @Module({
@@ -26,6 +26,6 @@ import { UsersService } from './users/users.service'
     AuthModule,
   ],
   providers: [AppService, AuthService, GoogleStrategy, UsersService],
-  controllers: [AppController],
+  controllers: [AuthController],
 })
 export class AppModule {}

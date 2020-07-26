@@ -1,19 +1,17 @@
 import { Controller, Get, Req, UseGuards, Post } from '@nestjs/common'
-import { AppService } from './app.service'
+import { AuthService } from '../auth/auth.service'
 import { AuthGuard } from '@nestjs/passport'
 import { Request } from 'express'
-import { LocalAuthGuard } from './auth/local-auth.guard'
-import { AuthService } from './auth/auth.service'
-import { UsersService } from './users/users.service'
-import { User } from './users/user.entity'
-import { JwtAuthGuard } from './auth/jwt-auth.guard'
+import { LocalAuthGuard } from '../auth/local-auth.guard'
+import { UsersService } from '../users/users.service'
+import { User } from '../users/user.entity'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { from } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 @Controller()
-export class AppController {
+export class AuthController {
   constructor(
-    private readonly appService: AppService,
     private authService: AuthService,
     private usersService: UsersService
   ) {}
@@ -30,13 +28,21 @@ export class AppController {
   googleAuthRedirect(
     @Req() req: Request
   ): { message: string; user: Express.User } {
-    return this.appService.googleLogin(req)
+    return this.authService.googleLogin(req)
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Req() req: Request): Promise<Express.User> {
     const user = await this.usersService.findOne(req.body.username)
+    return this.authService.login(user)
+  }
+
+  @Post('auth/refresh')
+  async refreshToken(@Req() req: Request): Promise<Express.User> {
+    const user = await this.usersService.findOneByRefreshToken(
+      req.body.refresh_token
+    )
     return this.authService.login(user)
   }
 

@@ -24,7 +24,7 @@ import { JwtConfigService } from 'src/jwt-config.service'
             return process.env.SECRET
         }
       },
-      signOptions: { expiresIn: '300s' },
+      signOptions: { expiresIn: '900s' },
     } as JwtModuleOptions),
   ],
   providers: [

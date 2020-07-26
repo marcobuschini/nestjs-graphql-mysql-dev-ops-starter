@@ -39,6 +39,7 @@
     "graphql": "14.6.0",
     "graphql-subscriptions": "1.1.0",
     "js-sha512": "^0.8.0",
+    "moment": "^2.27.0",
     "mysql2": "^2.1.0",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",

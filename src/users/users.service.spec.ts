@@ -5,6 +5,7 @@ import { resolve } from 'path'
 import { config } from 'dotenv'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { of } from 'rxjs'
+import { RefreshToken } from '../auth/refresh-token.entity'
 
 describe('UsersService', () => {
   let app: TestingModule
@@ -47,6 +48,21 @@ describe('UsersService', () => {
               offset: jest.fn().mockReturnThis(),
               limit: jest.fn().mockReturnThis(),
               getOne: jest.fn().mockReturnValueOnce(user1),
+              where: jest.fn().mockReturnThis(),
+            })),
+          },
+        },
+        {
+          provide: getRepositoryToken(RefreshToken),
+          useValue: {
+            save: (rt: RefreshToken): Promise<RefreshToken> =>
+              of(rt).toPromise(),
+            remove: (): Promise<void> => of(undefined).toPromise(),
+            createQueryBuilder: jest.fn(() => ({
+              offset: jest.fn().mockReturnThis(),
+              limit: jest.fn().mockReturnThis(),
+              innerJoinAndSelect: jest.fn().mockReturnThis(),
+              getOne: jest.fn().mockReturnValueOnce(new RefreshToken()),
               where: jest.fn().mockReturnThis(),
             })),
           },
