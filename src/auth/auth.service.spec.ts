@@ -12,16 +12,6 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         {
-          provide: UsersService,
-          useValue: {
-            create: jest.fn(),
-            findAll: jest.fn(),
-            findOne: jest.fn(),
-            remove: jest.fn(),
-            sequelize: null,
-          },
-        },
-        {
           provide: JwtService,
           useValue: {
             sign: jest.fn().mockReturnValue('test_token'),
@@ -41,7 +31,7 @@ describe('AuthService', () => {
               salt:
                 '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
               isActive: true,
-              checkPassword: jest.fn((password) => password === 'password'),
+              checkPassword: (password) => password === 'password',
             } as unknown) as User),
           },
         },
