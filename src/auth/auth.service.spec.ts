@@ -120,4 +120,22 @@ describe('AuthService', () => {
       refresh_token: 'refresh_token',
     })
   })
+
+  it('should login with Google', async () => {
+    await expect(service.googleLogin({} as Express.Request)).toEqual({
+      message: 'No user from Google',
+      user: null,
+    })
+    await expect(
+      service.googleLogin({
+        user: 'fake',
+        login: jest.fn(),
+        logIn: jest.fn(),
+        logout: jest.fn(),
+        logOut: jest.fn(),
+        isAuthenticated: () => true,
+        isUnauthenticated: () => false,
+      } as Express.Request)
+    ).toEqual({ message: 'User information from Google', user: 'fake' })
+  })
 })
