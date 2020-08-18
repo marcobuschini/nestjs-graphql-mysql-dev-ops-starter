@@ -5,10 +5,7 @@ import { User } from '../users/user.entity'
 @Entity({ name: 'refresh_token' })
 export class RefreshToken {
   constructor() {
-    this.refreshToken = randomBytes(64).toString('base64')
-    const future = new Date()
-    future.setDate(future.getDate() + 30)
-    this.expiresAt = future
+    this.refresh()
   }
 
   @PrimaryColumn()
@@ -19,4 +16,11 @@ export class RefreshToken {
 
   @Column()
   expiresAt: Date
+
+  public refresh(): void {
+    this.refreshToken = randomBytes(64).toString('base64')
+    const future = new Date()
+    future.setDate(future.getDate() + 30)
+    this.expiresAt = future
+  }
 }

@@ -40,10 +40,7 @@ export class AuthController {
 
   @Post('auth/refresh')
   async refreshToken(@Req() req: Request): Promise<Express.User> {
-    const user = await this.usersService.findOneByRefreshToken(
-      req.body.refresh_token
-    )
-    return this.authService.login(user)
+    return this.authService.refresh(req.body.refresh_token)
   }
 
   @UseGuards(JwtAuthGuard)

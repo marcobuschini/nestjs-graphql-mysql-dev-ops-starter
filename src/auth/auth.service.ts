@@ -64,6 +64,6 @@ export class AuthService {
     token: string
   ): Promise<{ access_token: string; refresh_token: string }> {
     const user = await this.usersService.findOneByRefreshToken(token)
-    return this.login(user)
+    return this.login(user, token)
   }
 }

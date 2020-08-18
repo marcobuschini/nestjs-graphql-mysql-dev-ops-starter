@@ -117,7 +117,7 @@ describe('AuthService', () => {
   it('should refresh the token', async () => {
     await expect(service.refresh('refresh_token')).resolves.toEqual({
       access_token: 'test_token',
-      refresh_token: undefined,
+      refresh_token: 'refresh_token',
     })
   })
 })
