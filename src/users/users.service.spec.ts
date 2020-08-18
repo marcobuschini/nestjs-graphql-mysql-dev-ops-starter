@@ -10,6 +10,8 @@ import { RefreshToken } from '../auth/refresh-token.entity'
 describe('UsersService', () => {
   let app: TestingModule
   let usersService: UsersService
+  let refreshSuccess: boolean
+
   const user1 = new User()
   user1.id = 1
   user1.username = 'hrichardson'
@@ -64,21 +66,26 @@ describe('UsersService', () => {
               offset: jest.fn().mockReturnThis(),
               limit: jest.fn().mockReturnThis(),
               innerJoinAndSelect: jest.fn().mockReturnThis(),
-              getOne: jest.fn().mockReturnValueOnce({
-                user: ({
-                  id: 1,
-                  username: 'user',
-                  firstName: 'Henry',
-                  lastName: 'Richardson',
-                  password: 'test',
-                  encryptedPassword:
-                    'e0578bc3977fcbedb81e1e6a8a1603e9287e2f3572b30de90171fa56d67062e13062f0566f42d6c3be1ca67cbc9963c9f978d6f468053b06d0acec25986e1b1d',
-                  salt:
-                    '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
-                  isActive: true,
-                  checkPassword: (password) => password === 'password',
-                } as unknown) as User,
-              }),
+              getOne: jest.fn().mockImplementation(() =>
+                refreshSuccess
+                  ? Promise.resolve({
+                      user: ({
+                        id: 1,
+                        username: 'user',
+                        firstName: 'Henry',
+                        lastName: 'Richardson',
+                        password: 'test',
+                        encryptedPassword:
+                          'e0578bc3977fcbedb81e1e6a8a1603e9287e2f3572b30de90171fa56d67062e13062f0566f42d6c3be1ca67cbc9963c9f978d6f468053b06d0acec25986e1b1d',
+                        salt:
+                          '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
+                        isActive: true,
+                        refreshTokens: null,
+                        checkPassword: (password) => password === 'password',
+                      } as Partial<User>) as User,
+                    })
+                  : Promise.reject({})
+              ),
               where: jest.fn().mockReturnThis(),
             })),
           },
@@ -134,12 +141,22 @@ describe('UsersService', () => {
       expect(user.lastName).toEqual(user1.lastName)
     })
 
-    it('findOneByRefreshToken()', async () => {
+    it('findOneByRefreshToken() - success', async () => {
+      refreshSuccess = true
+
       const user = await usersService.findOneByRefreshToken(
         refresh_token.refreshToken
       )
-      expect(user.firstName).toEqual(user1.firstName)
-      expect(user.lastName).toEqual(user1.lastName)
+      await expect(user.firstName).toEqual(user1.firstName)
+      await expect(user.lastName).toEqual(user1.lastName)
+    })
+
+    it('findOneByRefreshToken() - failure', async () => {
+      refreshSuccess = false
+
+      await expect(usersService.findOneByRefreshToken('fake')).rejects.toEqual(
+        'Invalid token'
+      )
     })
 
     it('checkPassword()', async () => {

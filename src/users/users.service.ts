@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
 import { User } from './user.entity'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -37,20 +37,21 @@ export class UsersService {
   }
 
   async findOneByRefreshToken(token: string): Promise<User> {
+    let refresh: RefreshToken
     try {
       const builder = this.refreshTokenRepository
         .createQueryBuilder('refresh_token')
         .innerJoinAndSelect('refresh_token.user', 'user')
         .where('refresh_token.refreshToken = :token', { token: token })
-      const refresh = await builder.getOne()
-      const now = moment()
-      if (now.isAfter(refresh.expiresAt)) {
-        throw new HttpException('Token expired', HttpStatus.BAD_REQUEST)
-      }
-      return refresh.user
+      refresh = await builder.getOne()
     } catch (e) {
-      throw new HttpException('Invalid token', HttpStatus.BAD_REQUEST)
+      return Promise.reject('Invalid token')
     }
+    const now = moment()
+    if (now.isAfter(refresh.expiresAt)) {
+      return Promise.reject('Token expired')
+    }
+    return refresh.user
   }
 
   async remove(id: string): Promise<void> {
