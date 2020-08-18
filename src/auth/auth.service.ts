@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common'
 import { UsersService } from '../users/users.service'
 import { JwtService } from '@nestjs/jwt'
 import { User } from 'src/users/user.entity'
-import { Request } from 'express'
 import { RefreshToken } from './refresh-token.entity'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -16,7 +15,7 @@ export class AuthService {
     private refreshTokenRepository: Repository<RefreshToken>
   ) {}
 
-  googleLogin(req: Request): { message: string; user: Express.User } {
+  googleLogin(req: Express.Request): { message: string; user: Express.User } {
     if (!req.user) {
       console.error('No user from Google')
       return {
