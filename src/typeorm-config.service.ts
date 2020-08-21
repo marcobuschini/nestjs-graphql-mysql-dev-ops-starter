@@ -5,7 +5,9 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm'
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
-      type: 'mysql',
+      // The following `disable` is required to load the database type from the configuration file.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      type: process.env.DB_DIALECT as any,
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
