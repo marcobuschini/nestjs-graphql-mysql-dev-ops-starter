@@ -1,9 +1,8 @@
-fixtures:
-  - model: Cat
-    data:
-      name: Birch
-      age: 2
-  - model: Cat
-    data:
-      name: Tabby
-      age: 5
+entity: Cat
+items:
+  cat1:
+    name: Birch
+    age: 2
+  cat2:
+    name: Tabby
+    age: 5

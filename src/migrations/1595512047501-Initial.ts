@@ -52,19 +52,16 @@ export class Initial1595512047501 implements MigrationInterface {
         name: 'id',
         type: 'integer',
         isGenerated: true,
+        generationStrategy: 'increment',
         isPrimary: true,
+      },
+      {
+        name: 'name',
+        type: 'varchar(255)',
       },
       {
         name: 'age',
         type: 'integer',
-      },
-      {
-        name: 'createdAt',
-        type: 'timestamp',
-      },
-      {
-        name: 'updatedAt',
-        type: 'timestamp',
       },
     ],
   })
