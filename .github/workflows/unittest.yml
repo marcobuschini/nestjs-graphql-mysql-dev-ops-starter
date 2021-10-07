@@ -1,0 +1,32 @@
+name: Unit Testing
+on: [push, pull_request]
+jobs:
+  unit-testing:
+    runs-on: ubuntu-latest
+    env:
+      CC_TEST_REPORTER_ID: acb0a765dd2f1e01f61ff0a206bcef6ca0f9a2a02cb979941edf9c11a5988ffb
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - run: npm install
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run: chmod +x ./cc-test-reporter
+      - run: ./cc-test-reporter before-build
+      - run: npm run test
+      - run: mkdir coverage
+      - run: mv tests/coverage/lcov.info coverage/lcov.info
+      - run: ./cc-test-reporter after-build -t lcov
+      - name: Upload Coveralls statistics
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
