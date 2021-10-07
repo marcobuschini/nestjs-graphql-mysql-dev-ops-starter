@@ -143,7 +143,7 @@
       [
         "jest-junit",
         {
-          "outputDirectory": "test/results",
+          "outputDirectory": "tests/results",
           "outputName": "report.xml"
         }
       ],
@@ -151,7 +151,7 @@
         "jest-html-reporters",
         {
           "pageTitle": "Test Report",
-          "publicPath": "test/results/report.html"
+          "publicPath": "tests/results/report.html"
         }
       ]
     ],
@@ -160,7 +160,7 @@
       "html",
       "text"
     ],
-    "coverageDirectory": "test/coverage",
+    "coverageDirectory": "tests/coverage",
     "roots": [
       "<rootDir>/src"
     ],

@@ -1,7 +1,7 @@
 dist
 node_modules
 production
-test
+tests
 .env
 keys/private.key
 keys/public.key
