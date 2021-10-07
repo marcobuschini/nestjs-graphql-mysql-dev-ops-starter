@@ -25,9 +25,10 @@ export class AuthController {
 
   @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(
-    @Req() req: Request
-  ): { message: string; user: Express.User } {
+  googleAuthRedirect(@Req() req: Request): {
+    message: string
+    user: Express.User
+  } {
     return this.authService.googleLogin(req)
   }
 
@@ -46,18 +47,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Req() req: Request): Promise<Partial<User>> {
-    return from(this.usersService.findOne((req.user as User).username))
-      .pipe(
-        map((i) => {
-          return {
-            id: i.id,
-            firstName: i.firstName,
-            lastName: i.lastName,
-            username: i.username,
-            isActive: i.isActive,
-          }
-        })
-      )
-      .toPromise()
+    return this.usersService.findOne((req.user as User).username)
   }
 }
