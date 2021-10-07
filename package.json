@@ -16,7 +16,7 @@
     "migrate:up": "npm run typeorm migration:run",
     "migrate:down": "npm run typeorm migration:revert",
     "lint": "eslint '{src,apps,libs,test}/**/*.ts' --fix",
-    "fixtures:load": "NODE_ENV=test npx fixtures -c ormconfig.json fixtures",
+    "fixtures:load": "NODE_ENV=test npx fixtures -c ormconfig-fixtures.json fixtures",
     "test": "NODE_ENV=test jest --runInBand --silent --detectOpenHandles",
     "test:watch": "NODE_ENV=test jest --watch --runInBand --silent --detectOpenHandles",
     "test:cov": "NODE_ENV=test jest --coverage --runInBand --silent --detectOpenHandles",
