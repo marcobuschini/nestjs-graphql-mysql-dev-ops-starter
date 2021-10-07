@@ -1,3 +1,5 @@
+[![Unit Testing](https://github.com/marcobuschini/nestjs-graphql-mysql-dev-ops-starter/actions/workflows/unittest.yml/badge.svg)](https://github.com/marcobuschini/nestjs-graphql-mysql-dev-ops-starter/actions/workflows/unittest.yml)
+[![Building](https://github.com/marcobuschini/nestjs-graphql-mysql-dev-ops-starter/actions/workflows/build.yml/badge.svg)](https://github.com/marcobuschini/nestjs-graphql-mysql-dev-ops-starter/actions/workflows/build.yml)
 [![Build Status](https://travis-ci.org/marcobuschini/nestjs-graphql-mysql-dev-ops-starter.svg?branch=master)](https://travis-ci.org/marcobuschini/nestjs-graphql-mysql-dev-ops-starter)
 [![Coverage Status](https://coveralls.io/repos/github/marcobuschini/nestjs-graphql-mysql-dev-ops-starter/badge.svg?branch=master)](https://coveralls.io/github/marcobuschini/nestjs-graphql-mysql-dev-ops-starter?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/61f98d04974944651e7e/maintainability)](https://codeclimate.com/github/marcobuschini/nestjs-graphql-mysql-dev-ops-starter/maintainability)
