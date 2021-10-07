@@ -21,5 +21,6 @@ jobs:
           node-version: '12'
       - run: npm install
       - run: mkdir production
+      - run: cp .env.test .env
       - run: npm run build:production
       - run: echo "🍏 This job's status is ${{ job.status }}."
