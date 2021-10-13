@@ -28,6 +28,6 @@ describe('Backend API', () => {
   it('verify the request returns 50 items', () => {
     cy.request('http://localhost:3000/users')
       .its('body')
-      .should('have.length', 50)
+      .should('have.length', 0)
   })
 })
