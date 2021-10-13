@@ -9,6 +9,7 @@
     "build:production": "nest build; npm prune --production; cp -R .env dist node_modules production",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "NODE_ENV=production nest start",
+    "start:test": "NODE_ENV=test nest start",
     "start:dev": "NODE_ENV=development nest start --watch",
     "start:debug": "NODE_ENV=development nest start --debug --watch",
     "start:prod": "NODE_ENV=production node dist/main",
@@ -21,7 +22,7 @@
     "test:watch": "NODE_ENV=test jest --watch --runInBand --silent --detectOpenHandles",
     "test:cov": "NODE_ENV=test jest --coverage --runInBand --silent --detectOpenHandles",
     "test:debug": "NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "echo 'No e2e tests implemented yet.'"
+    "test:integration": "NODE_ENV=test npx cypress run"
   },
   "dependencies": {
     "@nestjs/common": "8.0.11",
@@ -70,6 +71,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "commitizen": "^4.2.4",
     "coveralls": "^3.1.1",
+    "cypress": "^8.6.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "8.3.0",
@@ -80,6 +82,7 @@
     "jest-junit": "^13.0.0",
     "prettier": "2.4.1",
     "pretty-quick": "^3.1.1",
+    "start-server-and-test": "^1.14.0",
     "supertest": "6.1.6",
     "ts-jest": "27.0.5",
     "ts-loader": "9.2.6",
