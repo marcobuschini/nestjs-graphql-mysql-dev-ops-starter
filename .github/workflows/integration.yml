@@ -28,7 +28,7 @@ jobs:
       - name: Set up MySQL
         run: |
           sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+          mysql -e 'CREATE DATABASE ${{ env.TYPEORM_DATABASE }};' -u${{ env.TYPEORM_USERNAME }} -p${{ env.TYPEORM_PASSWORD }}
       - run: ssh-keygen -f keys/key -N ""
       - run: mv keys/key keys/private.key
       - run: mv keys/key.pub keys/public.key
