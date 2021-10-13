@@ -22,7 +22,9 @@
     "test:watch": "env NODE_ENV=test jest --watch --runInBand --silent --detectOpenHandles",
     "test:coverage": "env NODE_ENV=test jest --coverage --runInBand --silent --detectOpenHandles",
     "test:debug": "env NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:integration": "env NODE_ENV=test npx cypress run"
+    "cypress:start": "env NODE_ENV=test npx cypress open",
+    "cypress:run": "env NODE_ENV=test npx cypress run",
+    "test:integration": "env NODE_ENV=test npx start-server-and-test start:test http://localhost:3000/users cypress:run"
   },
   "dependencies": {
     "@nestjs/common": "8.0.11",
