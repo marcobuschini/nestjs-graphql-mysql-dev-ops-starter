@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build; cp .env.development dist/.env",
-    "build:test": "nest build; cp .env.test dist/.env",
-    "build:production": "nest build; npm prune --production; cp -R .env dist node_modules production",
+    "build": "env NODE_ENV=development nest build; cp .env.development dist/.env",
+    "build:test": "env NODE_ENV=test nest build; cp .env.test dist/.env",
+    "build:production": "env NODE_ENV=production nest build; npm prune --production; cp -R .env dist node_modules production",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "env NODE_ENV=development nest start --watch",
     "start:test": "env NODE_ENV=test nest start",
