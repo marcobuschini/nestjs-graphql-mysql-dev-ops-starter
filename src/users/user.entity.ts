@@ -36,7 +36,9 @@ export class User {
   @Column({ default: true })
   isActive: boolean
 
-  @OneToMany(() => RefreshToken, (refresh_token) => refresh_token.user)
+  @OneToMany(() => RefreshToken, (refresh_token) => refresh_token.user, {
+    nullable: true,
+  })
   refreshTokens: RefreshToken[]
 
   public checkPassword(password: string): boolean {
