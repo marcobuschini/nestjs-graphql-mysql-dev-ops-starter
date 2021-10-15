@@ -69,7 +69,7 @@ describe('UsersService', () => {
               getOne: jest.fn().mockImplementation(() =>
                 refreshSuccess
                   ? Promise.resolve({
-                      user: ({
+                      user: {
                         id: 1,
                         username: 'user',
                         firstName: 'Henry',
@@ -77,12 +77,11 @@ describe('UsersService', () => {
                         password: 'test',
                         encryptedPassword:
                           'e0578bc3977fcbedb81e1e6a8a1603e9287e2f3572b30de90171fa56d67062e13062f0566f42d6c3be1ca67cbc9963c9f978d6f468053b06d0acec25986e1b1d',
-                        salt:
-                          '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
+                        salt: '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
                         isActive: true,
                         refreshTokens: null,
                         checkPassword: (password) => password === 'password',
-                      } as Partial<User>) as User,
+                      } as Partial<User> as User,
                     })
                   : Promise.reject({})
               ),
