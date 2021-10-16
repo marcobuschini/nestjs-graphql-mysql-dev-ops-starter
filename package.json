@@ -23,8 +23,6 @@
     "test:debug": "env NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "cypress:start": "env NODE_ENV=test npx cypress open",
     "cypress:run": "env NODE_ENV=test npx cypress run",
-    "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
-    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
     "test:integration": "env NODE_ENV=test npx start-server-and-test start:test http://localhost:3000/users cypress:run"
   },
   "dependencies": {
@@ -92,7 +90,7 @@
     "ts-loader": "9.2.6",
     "ts-node": "^10.2.1",
     "tsconfig-paths": "3.11.0",
-    "typeorm-seeding": "^1.6.1",
+    "typeorm-fixtures-cli": "^1.9.2",
     "typescript": "^3.9.0"
   },
   "config": {
