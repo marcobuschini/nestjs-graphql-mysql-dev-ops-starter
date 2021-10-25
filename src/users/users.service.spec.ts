@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { UsersService } from './users.service'
-import { User } from './user.entity'
+import { User } from '../entity/user.entity'
 import { resolve } from 'path'
 import { config } from 'dotenv'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { of } from 'rxjs'
-import { RefreshToken } from '../auth/refresh-token.entity'
+import { RefreshToken } from '../entity/refresh-token.entity'
 
 describe('UsersService', () => {
   let app: TestingModule

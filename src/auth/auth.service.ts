@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { UsersService } from '../users/users.service'
 import { JwtService } from '@nestjs/jwt'
-import { User } from 'src/users/user.entity'
-import { RefreshToken } from './refresh-token.entity'
+import { User } from 'src/entity/user.entity'
+import { RefreshToken } from '../entity/refresh-token.entity'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 

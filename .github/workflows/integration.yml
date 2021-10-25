@@ -20,11 +20,11 @@ jobs:
         run: |
           sudo /etc/init.d/mysql start
           mysql -e 'CREATE DATABASE cats' -uroot -proot
+          mysql -uroot -proot <test-data.sql
       - run: ssh-keygen -f keys/key -N ""
       - run: mv keys/key keys/private.key
       - run: mv keys/key.pub keys/public.key
       - run: npm run build:test
       - run: cp .env.github .env.test
-      - run: npm run fixtures:load
       - run: npm run test:integration
       - run: echo "🍏 This job's status is ${{ job.status }}."

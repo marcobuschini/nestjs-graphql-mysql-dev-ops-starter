@@ -4,10 +4,8 @@ import { AuthGuard } from '@nestjs/passport'
 import { Request } from 'express'
 import { LocalAuthGuard } from '../auth/local-auth.guard'
 import { UsersService } from '../users/users.service'
-import { User } from '../users/user.entity'
+import { User } from '../entity/user.entity'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
-import { from } from 'rxjs'
-import { map } from 'rxjs/operators'
 
 @Controller()
 export class AuthController {

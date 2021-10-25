@@ -2,12 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { AuthService } from './auth.service'
 import { UsersService } from '../users/users.service'
 import { JwtService } from '@nestjs/jwt'
-import { User } from '../users/user.entity'
+import { User } from '../entity/user.entity'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { RefreshToken } from './refresh-token.entity'
+import { RefreshToken } from '../entity/refresh-token.entity'
 import { of } from 'rxjs'
 
-jest.mock('./refresh-token.entity')
+jest.mock('../entity/refresh-token.entity')
 
 describe('AuthService', () => {
   let service: AuthService
