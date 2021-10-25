@@ -54,8 +54,8 @@ export class UsersService {
     return refresh.user
   }
 
-  async remove(id: string): Promise<void> {
-    const user = await this.findOne(id)
+  async remove(username: string): Promise<void> {
+    const user = await this.findOne(username)
     await this.userRepository.remove(user)
   }
 }
