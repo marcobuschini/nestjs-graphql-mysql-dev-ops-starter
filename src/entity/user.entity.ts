@@ -1,10 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  BaseEntity,
+} from 'typeorm'
 import { sha512 } from 'js-sha512'
 import { randomBytes } from 'crypto'
-import { RefreshToken } from '../auth/refresh-token.entity'
+import { RefreshToken } from './refresh-token.entity'
 
 @Entity({ name: 'user' })
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -19,6 +25,10 @@ export class User {
 
   @Column({ name: 'password' })
   private encryptedPassword: string
+
+  constructor() {
+    super()
+  }
 
   set password(password: string) {
     this.salt = randomBytes(64).toString('base64')

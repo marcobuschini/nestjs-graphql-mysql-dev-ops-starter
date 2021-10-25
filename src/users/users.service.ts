@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
-import { User } from './user.entity'
+import { User } from '../entity/user.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { RefreshToken } from '../auth/refresh-token.entity'
+import { RefreshToken } from '../entity/refresh-token.entity'
 import * as moment from 'moment'
 
 @Injectable()

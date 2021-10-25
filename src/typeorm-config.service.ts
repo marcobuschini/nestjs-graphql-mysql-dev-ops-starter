@@ -14,6 +14,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
       autoLoadEntities: true,
+      entities: [__dirname + './dist/entity/*.js'],
       synchronize: true,
     }
   }

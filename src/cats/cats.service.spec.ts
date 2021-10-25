@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { CatsService } from './cats.service'
-import { Cat } from './cat.entity'
+import { Cat } from '../entity/cat.entity'
 import { resolve } from 'path'
 import { config } from 'dotenv'
 import { getRepositoryToken } from '@nestjs/typeorm'

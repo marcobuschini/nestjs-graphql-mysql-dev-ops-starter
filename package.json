@@ -17,7 +17,6 @@
     "migrate:up": "npm run typeorm migration:run",
     "migrate:down": "npm run typeorm migration:revert",
     "lint": "eslint '{src,apps,libs,test}/**/*.ts' --fix",
-    "fixtures:load": "env NODE_ENV=test npx fixtures -c ormconfig-fixtures.json fixtures",
     "test": "env NODE_ENV=test jest --runInBand --silent --detectOpenHandles",
     "test:watch": "env NODE_ENV=test jest --watch --runInBand --silent --detectOpenHandles",
     "test:coverage": "env NODE_ENV=test jest --coverage --runInBand --silent --detectOpenHandles",
@@ -90,7 +89,6 @@
     "ts-loader": "9.2.6",
     "ts-node": "^10.2.1",
     "tsconfig-paths": "3.11.0",
-    "typeorm-fixtures-cli": "^1.9.2",
     "typescript": "^3.9.0"
   },
   "config": {

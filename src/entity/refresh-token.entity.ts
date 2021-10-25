@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn, ManyToOne } from 'typeorm'
 import { randomBytes } from 'crypto'
-import { User } from '../users/user.entity'
+import { User } from './user.entity'
 
 @Entity({ name: 'refresh_token' })
 export class RefreshToken {

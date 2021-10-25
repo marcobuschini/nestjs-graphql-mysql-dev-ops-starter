@@ -2,12 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { AuthService } from './auth.service'
 import { UsersService } from '../users/users.service'
 import { JwtService } from '@nestjs/jwt'
-import { User } from '../users/user.entity'
+import { User } from '../entity/user.entity'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { RefreshToken } from './refresh-token.entity'
+import { RefreshToken } from '../entity/refresh-token.entity'
 import { of } from 'rxjs'
 
-jest.mock('./refresh-token.entity')
+jest.mock('../entity/refresh-token.entity')
 
 describe('AuthService', () => {
   let service: AuthService
@@ -25,7 +25,7 @@ describe('AuthService', () => {
         {
           provide: UsersService,
           useValue: {
-            findOne: jest.fn().mockResolvedValue(({
+            findOne: jest.fn().mockResolvedValue({
               id: 1,
               username: 'user',
               firstName: 'First',
@@ -33,12 +33,11 @@ describe('AuthService', () => {
               password: 'test',
               encryptedPassword:
                 'e0578bc3977fcbedb81e1e6a8a1603e9287e2f3572b30de90171fa56d67062e13062f0566f42d6c3be1ca67cbc9963c9f978d6f468053b06d0acec25986e1b1d',
-              salt:
-                '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
+              salt: '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
               isActive: true,
               checkPassword: (password) => password === 'password',
-            } as unknown) as User),
-            findOneByRefreshToken: jest.fn().mockResolvedValue(({
+            } as unknown as User),
+            findOneByRefreshToken: jest.fn().mockResolvedValue({
               id: 1,
               username: 'user',
               firstName: 'First',
@@ -46,11 +45,10 @@ describe('AuthService', () => {
               password: 'test',
               encryptedPassword:
                 'e0578bc3977fcbedb81e1e6a8a1603e9287e2f3572b30de90171fa56d67062e13062f0566f42d6c3be1ca67cbc9963c9f978d6f468053b06d0acec25986e1b1d',
-              salt:
-                '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
+              salt: '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
               isActive: true,
               checkPassword: (password) => password === 'password',
-            } as unknown) as User),
+            } as unknown as User),
           },
         },
         {
@@ -64,7 +62,7 @@ describe('AuthService', () => {
               limit: jest.fn().mockReturnThis(),
               innerJoinAndSelect: jest.fn().mockReturnThis(),
               getOne: jest.fn().mockReturnValueOnce({
-                user: ({
+                user: {
                   id: 1,
                   username: 'user',
                   firstName: 'First',
@@ -72,11 +70,10 @@ describe('AuthService', () => {
                   password: 'test',
                   encryptedPassword:
                     'e0578bc3977fcbedb81e1e6a8a1603e9287e2f3572b30de90171fa56d67062e13062f0566f42d6c3be1ca67cbc9963c9f978d6f468053b06d0acec25986e1b1d',
-                  salt:
-                    '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
+                  salt: '7Vpo3gHYfSBxxpWi/76upY3nFiq0us17ablhIbh7PO63LTLMEYvckiDIZD7xw4V0Ip6FBewuYMHEpV9ZFL5RMQ==',
                   isActive: true,
                   checkPassword: (password) => password === 'password',
-                } as unknown) as User,
+                } as unknown as User,
               }),
               where: jest.fn().mockReturnThis(),
             })),

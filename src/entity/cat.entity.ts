@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import { Cat as ICat } from '../graphql.schema'
 
 @Entity({ name: 'cat' })
-export class Cat implements ICat {
+export class Cat extends BaseEntity implements ICat {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -11,4 +11,8 @@ export class Cat implements ICat {
 
   @Column()
   age: number
+
+  constructor() {
+    super()
+  }
 }

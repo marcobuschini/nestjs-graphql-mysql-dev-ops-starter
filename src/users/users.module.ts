@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common'
-import { User } from './user.entity'
+import { User } from '../entity/user.entity'
 import { UsersController } from './users.controller'
 import { UsersService } from './users.service'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { RefreshToken } from 'src/auth/refresh-token.entity'
+import { RefreshToken } from 'src/entity/refresh-token.entity'
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, RefreshToken])],
