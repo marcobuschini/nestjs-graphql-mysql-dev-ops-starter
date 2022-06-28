@@ -1,5 +1,5 @@
 import { CreateCatDto } from '../dto/create-cat.dto'
-import { of } from 'rxjs'
+import { firstValueFrom, of } from 'rxjs'
 import { Cat } from 'src/graphql.schema'
 
 export class CatsService {
@@ -29,15 +29,15 @@ export class CatsService {
       age: createCatDto.age,
     }
     this.cats.push(cat)
-    return of(cat).toPromise()
+    return firstValueFrom(of(cat))
   }
 
   findAll(): Promise<Cat[]> {
-    return of(this.cats).toPromise()
+    return firstValueFrom(of(this.cats))
   }
 
   findOne(id: number): Promise<Cat> {
     const cat = this.cats.find((cat) => cat.id == id)
-    return of(cat).toPromise()
+    return firstValueFrom(of(cat))
   }
 }

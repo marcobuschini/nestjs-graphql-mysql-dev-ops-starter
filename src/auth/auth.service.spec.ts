@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt'
 import { User } from '../entity/user.entity'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { RefreshToken } from '../entity/refresh-token.entity'
-import { of } from 'rxjs'
+import { of, firstValueFrom } from 'rxjs'
 
 jest.mock('../entity/refresh-token.entity')
 
@@ -55,8 +55,8 @@ describe('AuthService', () => {
           provide: getRepositoryToken(RefreshToken),
           useValue: {
             save: (rt: RefreshToken): Promise<RefreshToken> =>
-              of(rt).toPromise(),
-            remove: (): Promise<void> => of(undefined).toPromise(),
+              firstValueFrom(of(rt)),
+            remove: (): Promise<void> => firstValueFrom(of(undefined)),
             createQueryBuilder: jest.fn(() => ({
               offset: jest.fn().mockReturnThis(),
               limit: jest.fn().mockReturnThis(),

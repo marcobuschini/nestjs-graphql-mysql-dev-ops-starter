@@ -4,7 +4,7 @@ import { User } from '../entity/user.entity'
 import { resolve } from 'path'
 import { config } from 'dotenv'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { of } from 'rxjs'
+import { firstValueFrom, of } from 'rxjs'
 import { RefreshToken } from '../entity/refresh-token.entity'
 
 describe('UsersService', () => {
@@ -43,11 +43,11 @@ describe('UsersService', () => {
         {
           provide: getRepositoryToken(User),
           useValue: {
-            find: (): Promise<User[]> => of([user1, user2]).toPromise(),
+            find: (): Promise<User[]> => firstValueFrom(of([user1, user2])),
             findOne: ({ where: { id } }): Promise<User> =>
-              of([user1, user2].find((u) => u.id == id)).toPromise(),
-            save: (u: User): Promise<User> => of(u).toPromise(),
-            remove: (): Promise<void> => of(undefined).toPromise(),
+              firstValueFrom(of([user1, user2].find((u) => u.id == id))),
+            save: (u: User): Promise<User> => firstValueFrom(of(u)),
+            remove: (): Promise<void> => firstValueFrom(of(undefined)),
             createQueryBuilder: jest.fn(() => ({
               offset: jest.fn().mockReturnThis(),
               limit: jest.fn().mockReturnThis(),
@@ -60,8 +60,8 @@ describe('UsersService', () => {
           provide: getRepositoryToken(RefreshToken),
           useValue: {
             save: (rt: RefreshToken): Promise<RefreshToken> =>
-              of(rt).toPromise(),
-            remove: (): Promise<void> => of(undefined).toPromise(),
+              firstValueFrom(of(rt)),
+            remove: (): Promise<void> => firstValueFrom(of(undefined)),
             createQueryBuilder: jest.fn(() => ({
               offset: jest.fn().mockReturnThis(),
               limit: jest.fn().mockReturnThis(),
