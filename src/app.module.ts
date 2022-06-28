@@ -10,6 +10,7 @@ import { TypeOrmConfigService } from './typeorm-config.service'
 import { AuthService } from './auth/auth.service'
 import { AuthController } from './auth/auth.controller'
 import { UsersService } from './users/users.service'
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 
 @Module({
   imports: [
@@ -18,10 +19,11 @@ import { UsersService } from './users/users.service'
     }),
     UsersModule,
     CatsModule,
-    GraphQLModule.forRoot({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
       typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,
       playground: true,
+      driver: ApolloDriver,
     }),
     AuthModule,
   ],
