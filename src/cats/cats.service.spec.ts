@@ -4,7 +4,7 @@ import { Cat } from '../entity/cat.entity'
 import { resolve } from 'path'
 import { config } from 'dotenv'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { of } from 'rxjs'
+import { firstValueFrom, of } from 'rxjs'
 
 describe('CatsService', () => {
   let app: TestingModule
@@ -36,11 +36,11 @@ describe('CatsService', () => {
         {
           provide: getRepositoryToken(Cat),
           useValue: {
-            find: (): Promise<Cat[]> => of([cat1, cat2]).toPromise(),
+            find: (): Promise<Cat[]> => firstValueFrom(of([cat1, cat2])),
             findOne: ({ where: { id } }): Promise<Cat> =>
-              of([cat1, cat2].find((c) => c.id == id)).toPromise(),
-            save: (c: Cat): Promise<Cat> => of(c).toPromise(),
-            remove: (): Promise<void> => of(undefined).toPromise(),
+              firstValueFrom(of([cat1, cat2].find((c) => c.id == id))),
+            save: (c: Cat): Promise<Cat> => firstValueFrom(of(c)),
+            remove: (): Promise<void> => firstValueFrom(of(undefined)),
           },
         },
       ],
