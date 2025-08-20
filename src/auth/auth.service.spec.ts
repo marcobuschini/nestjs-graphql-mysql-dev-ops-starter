@@ -6,6 +6,7 @@ import { User } from '../entity/user.entity'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { RefreshToken } from '../entity/refresh-token.entity'
 import { of, firstValueFrom } from 'rxjs'
+import { Request } from '@nestjs/common'
 
 jest.mock('../entity/refresh-token.entity')
 
@@ -91,7 +92,7 @@ describe('AuthService', () => {
 
   it('should validate user, valid password', async () => {
     await expect(
-      service.validateUser('username', 'password')
+      service.validateUser('username', 'password'),
     ).resolves.toBeTruthy()
   })
 
@@ -130,9 +131,9 @@ describe('AuthService', () => {
         logIn: jest.fn(),
         logout: jest.fn(),
         logOut: jest.fn(),
-        isAuthenticated: () => true,
-        isUnauthenticated: () => false,
-      } as Express.Request)
+        isAuthenticated: null,
+        isUnauthenticated: null,
+      } as Express.Request),
     ).toEqual({ message: 'User information from Google', user: 'fake' })
   })
 })

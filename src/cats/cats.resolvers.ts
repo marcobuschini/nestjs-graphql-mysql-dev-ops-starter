@@ -21,7 +21,7 @@ export class CatsResolvers {
   @Query('cat')
   async findOne(
     @Args('id', ParseIntPipe)
-    id: number
+    id: number,
   ): Promise<Cat> {
     return this.catsService.findOne(id)
   }
@@ -39,6 +39,6 @@ export class CatsResolvers {
     { catCreated: Cat },
     { catCreated: Cat }
   > {
-    return CatsResolvers.pubSub.asyncIterator<string>('catCreated')
+    return CatsResolvers.pubSub.asyncIterableIterator<string>('catCreated')
   }
 }
