@@ -23,7 +23,8 @@
     "test:debug": "env NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "cypress:start": "env NODE_ENV=test npx cypress open",
     "cypress:run": "env NODE_ENV=test npx cypress run",
-    "test:integration": "env NODE_ENV=test npx start-server-and-test start:test http://localhost:3000/users cypress:run"
+    "test:integration": "env NODE_ENV=test npx start-server-and-test start:test http://localhost:3000/users cypress:run",
+    "prepare": "husky"
   },
   "dependencies": {
     "@apollo/server": "^5.0.0",
@@ -181,12 +182,5 @@
       "json",
       "node"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
-      "pre-commit": "npx pretty-quick --staged && npx jest --passWithNoTests",
-      "pre-push": "npm run build"
-    }
   }
 }
