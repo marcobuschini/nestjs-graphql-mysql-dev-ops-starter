@@ -27,7 +27,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@apollo/server": "^5.0.0",
+    "@nestjs/apollo": "^13.1.0",
     "@graphql-tools/schema": "^10.0.25",
     "@nestjs/common": "^11.1.6",
     "@nestjs/core": "^11.1.6",
@@ -51,7 +51,6 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "reflect-metadata": "0.2.2",
-    "rimraf": "6.0.1",
     "rxjs": "7.8.2",
     "sqlite3": "^5.1.7",
     "swagger-ui-express": "^5.0.1",
@@ -88,6 +87,7 @@
     "jest-junit": "^16.0.0",
     "prettier": "^3.6.2",
     "pretty-quick": "^4.2.2",
+    "rimraf": "6.0.1",
     "start-server-and-test": "^2.0.13",
     "supertest": "^7.1.4",
     "ts-jest": "^29.4.1",

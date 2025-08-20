@@ -1,16 +1,10 @@
-import {
-  ApolloServerPlugin,
-  BaseContext,
-  GraphQLRequestContext,
-} from 'apollo-server-plugin-base'
+import { ApolloServerPlugin } from '@apollo/server'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class LoggingPlugin implements ApolloServerPlugin {
-  requestDidStart(
-    requestContext: GraphQLRequestContext<BaseContext>
-  ): Promise<void> {
+  requestDidStart(): Promise<void> {
     console.log('Request started')
-    console.log('Will send response')
-    console.log(requestContext.request)
     return Promise.resolve()
   }
 }
